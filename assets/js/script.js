@@ -144,13 +144,22 @@ $(".list-group").on("click", "span", function() {
 	// swap out elements
 	$(this).replaceWith(dateInput);
 
+	// enable jquery ui date picker
+	dateInput.datepicker({
+	minDate: 1,
+	onClose: function() {
+		// when calendar is closed, force a "change" event
+		$(this).trigger("change");
+	}
+	});
+
 	// automatically focus on new element
 	dateInput.trigger("focus");
 
 });
 
 // ****** AFTER EDIT DUE DATE ****** //
-$(".list-group").on("blur", "input[type='text']", function() {
+$(".list-group").on("change", "input[type='text']", function() {
 	// get current text
 	var date = $(this)
 	.val()
@@ -179,6 +188,7 @@ $(".list-group").on("blur", "input[type='text']", function() {
 	// replace input with span element
 	$(this).replaceWith(taskSpan);
 });
+
 
 // ****** MAKE COLUMNS SORTABLE (DRAG/DROP) ****** //
 $(".card .list-group").sortable({
@@ -262,43 +272,6 @@ $("#modalDueDate").datepicker({
 	minDate: 1
 });
 
-
-// ******  SHOW DATE PICKER ON EDIT TASK IN LISTS  ****** //
-// $(".list-group").on("click", "span", function() {
-// 	// get current text
-// 	var date = $(this).text().trim();
-
-// 	// create new input element
-// 	var dateInput = $("<input>").attr("type", "text").addClass("form-control").val(date);
-
-// 	$(this).replaceWith(dateInput);
-
-// 	// enable jquery ui datepicker
-// 	dateInput.datepicker({
-// 		minDate: 1
-// 	});
-
-// 	// automatically bring up the calendar
-// 	dateInput.trigger("focus");
-// });
-
-$(".list-group").on("click", "span", function() {
-	// get current text
-	var date = $(this).text().trim();
-  console.log(this);
-	// create new input element
-	var dateInput = $("<input>").attr("type", "text").addClass("form-control").val(date);
-  console.log(dateInput);
-	$(this).replaceWith(dateInput);
-  
-	// enable jquery ui datepicker
-	dateInput.datepicker({
-	  minDate: 1
-	});
- 
-	// automatically bring up the calendar
-	dateInput.trigger("focus");
-  });
 
 // load tasks for the first time
 loadTasks();
