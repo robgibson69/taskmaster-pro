@@ -224,16 +224,16 @@ $(".card .list-group").sortable({
 	tolerance: "pointer",
 	herlper: "clone",
 	activate: function(event) {
-		console.log("activate", this);
+		$(this).addClass("dropover");
 	},
 	deactivate: function(event) {
-		console.log("deactivate", this);
+		$(this).removeClass("dropover");
 	},
 	over: function(event) {
-		console.log("over", event.target);
+		$(event.target).addClass("dropover-active");
 	},
 	out: function(event) {
-		console.log("out", event.target);
+		$(event.target).removeClass("dropover-active");
 	},
 	update: function(event) {
 		var tempArr = [];
@@ -303,4 +303,9 @@ $("#modalDueDate").datepicker({
 // load tasks for the first time
 loadTasks();
 
+setInterval(function () {
+	$(".card .list-group-item").each(function(index, el) {
+	  auditTask(el);
+	});
+  }, 1800000);
 
